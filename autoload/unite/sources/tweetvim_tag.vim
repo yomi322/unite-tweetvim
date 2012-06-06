@@ -24,7 +24,7 @@ let s:source_tag_buffer = {
 \ }
 
 function! s:source_tag_buffer.gather_candidates(args, context)
-  let pattern = '[ 　。、]\zs[#＃][^ ].\{-1,}\ze[ \n]'
+  let pattern = '[ 　。、]\zs[#＃][^ 　].\{-1,}\ze[ 　\n]'
   let tags = []
   for line in getbufline('%', 1, '$')
     let line = line . ' '
