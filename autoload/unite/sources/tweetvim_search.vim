@@ -59,6 +59,8 @@ function! s:source_search_new.change_candidates(args, context)
 endfunction
 
 
+function! unite#sources#tweetvim_search#define()
+  return [s:source_search, s:source_search_new]
 endfunction
 
 let &cpo = s:save_cpo
