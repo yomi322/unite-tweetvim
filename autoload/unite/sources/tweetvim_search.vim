@@ -46,7 +46,7 @@ endfunction
 
 
 let s:source_search_new = {
-\   'name' : 'tweetvim/search/new',
+\   'name' : 'tweetvim/search_new',
 \ }
 
 function! s:source_search_new.change_candidates(args, context)
