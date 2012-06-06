@@ -19,7 +19,7 @@ function! s:source_tag.gather_candidates(args, context)
 endfunction
 
 
-function! unite#sources#tweetvim_search#define()
+function! unite#sources#tweetvim_tag#define()
   return s:source_tag
 endfunction
 
