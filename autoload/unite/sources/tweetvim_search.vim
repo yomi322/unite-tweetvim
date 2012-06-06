@@ -15,6 +15,7 @@ function! s:cache_read()
 endfunction
 
 function! s:cache_write(word)
+  call s:cache_read()
   if index(s:cache['words'], a:word) == -1
     call writefile(sort(add(s:cache['words'], a:word)), s:fname)
   endif
