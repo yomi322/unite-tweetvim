@@ -33,8 +33,11 @@ function! s:source_tag_buffer.gather_candidates(args, context)
       if tag ==# ''
         break
       endif
-      call add(tags, substitute(tag, '[#＃]', '', ''))
       let line = substitute(line, tag, '', '')
+      let tag = substitute(tag, '[#＃]', '', '')
+      if index(tags, tag) != -1
+        call add(tags, tag)
+      endif
     endwhile
   endfor
 
