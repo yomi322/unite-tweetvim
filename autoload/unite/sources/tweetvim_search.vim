@@ -21,6 +21,12 @@ function! s:cache_write(word)
 endfunction
 
 
+function! unite#sources#tweetvim_search#search(word)
+  call s:cache_write(a:word)
+  call tweetvim#timeline('search', a:word)
+endfunction
+
+
 let s:source_search = {
 \   'name' : 'tweetvim/search',
 \ }
@@ -53,9 +59,6 @@ function! s:source_search_new.change_candidates(args, context)
 endfunction
 
 
-function! unite#sources#tweetvim_search#search(word)
-  call s:cache_write(a:word)
-  call tweetvim#timeline('search', a:word)
 endfunction
 
 let &cpo = s:save_cpo
