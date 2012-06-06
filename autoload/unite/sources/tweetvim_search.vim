@@ -6,8 +6,10 @@ function! unite#sources#tweetvim_search#define()
 endfunction
 
 let s:source_search = {
-\   'name' : 'tweetvim/search',
-\ }
+      \   'name' : 'tweetvim/search',
+      \   'action_table' : {},
+      \   'default_action' : { 'common' : 'execute' }
+      \ }
 
 function! s:source_search.gather_candidates(args, context)
   call s:cache_read()
@@ -15,11 +17,16 @@ function! s:source_search.gather_candidates(args, context)
   for word in s:cache['words']
     call add(candidates, {
           \   'word' : word,
-          \   'kind' : 'command',
-          \   'action__command' : "call unite#sources#tweetvim_search#search('" . word . "')",
+          \   'kind' : 'common',
           \ })
   endfor
   return candidates
+endfunction
+
+let s:source_search.action_table.execute = { 'description' : 'search word in timeline' }
+
+function! s:source_search.action_table.execute.func(candidate)
+  execute "call unite#sources#tweetvim_search('" . a:candidate.word . "')"
 endfunction
 
 
