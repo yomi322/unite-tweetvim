@@ -34,7 +34,7 @@ function! s:source_tag_buffer.gather_candidates(args, context)
         break
       endif
       call add(tags, substitute(tag, '[#＃]', '', ''))
-      let line = substitute(text, tag, '', '')
+      let line = substitute(line, tag, '', '')
     endwhile
   endfor
 
