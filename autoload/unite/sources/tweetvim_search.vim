@@ -1,7 +1,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:fname = g:tweetvim_config_dir . 'search_history'
+let s:fname = g:tweetvim_config_dir . '/search_history'
 let s:cache = {
 \   'words' : [],
 \   'ftime' : -1,
