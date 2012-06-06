@@ -26,7 +26,7 @@ endfunction
 let s:source_search.action_table.execute = { 'description' : 'search word in timeline' }
 
 function! s:source_search.action_table.execute.func(candidate)
-  execute "call unite#sources#tweetvim_search('" . a:candidate.word . "')"
+  execute "call unite#sources#tweetvim_search#search('" . a:candidate.word . "')"
 endfunction
 
 
