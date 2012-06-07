@@ -8,7 +8,7 @@ endfunction
 let s:source_search = {
       \   'name' : 'tweetvim/search',
       \   'action_table' : {},
-      \   'default_action' : 'execute',
+      \   'default_action' : 'search',
       \ }
 
 function! s:source_search.gather_candidates(args, context)
@@ -19,17 +19,22 @@ endfunction
 let s:source_search_new = {
       \   'name' : 'tweetvim/search_new',
       \   'action_table' : {},
-      \   'default_action' : 'execute',
+      \   'default_action' : 'search',
       \ }
 
 function! s:source_search_new.change_candidates(args, context)
   return [ { 'word' : a:context.input, 'kind' : 'common' } ]
 endfunction
 
+let s:action_table = {}
+let s:action_table.search = {
+      \   'description' : 'search word in timeline',
+      \   'is_selectable' : 1,
+      \ }
 
-let s:action_table = { 'execute' : { 'description' : 'search word in timeline' } }
-function! s:action_table.execute.func(candidate)
-  execute "call unite#sources#tweetvim_search#search('" . a:candidate.word . "')"
+function! s:action_table.search.func(candidates)
+  let word = join(map(deepcopy(a:candidates), "v:val.word"))
+  execute "call unite#sources#tweetvim_search#search('" . word . "')"
 endfunction
 
 let s:source_search.action_table = s:action_table
