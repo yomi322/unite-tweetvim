@@ -8,7 +8,7 @@ endfunction
 let s:source_name = {
       \   'name' : 'tweetvim/name',
       \   'action_table' : {},
-      \   'default_action' : 'search',
+      \   'default_action' : 'tweet_to',
       \ }
 
 function! s:source_name.gather_candidates(args, context)
