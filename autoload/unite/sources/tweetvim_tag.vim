@@ -81,7 +81,9 @@ function! s:action_table.tweet.func(candidates)
   execute "call tweetvim#say#open('" . tag . "')"
 endfunction
 
-let s:source_name.action_table = s:action_table
+let s:source_tag.action_table = s:action_table
+let s:source_tag_new.action_table = s:action_table
+let s:source_tag_buffer.action_table = s:action_table
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
