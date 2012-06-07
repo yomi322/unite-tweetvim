@@ -33,7 +33,7 @@ let s:action_table.tweet_to = {
 
 function! s:action_table.tweet_to.func(candidates)
   let name = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call tweetvim#say#open('" . user . ' ' . "')"
+  execute "call tweetvim#say#open('" . name . ' ' . "')"
 endfunction
 
 let s:action_table.user_timeline = {
