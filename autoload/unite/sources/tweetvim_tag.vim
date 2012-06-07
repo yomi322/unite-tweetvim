@@ -57,6 +57,16 @@ function! s:action_table.tweet.func(candidates)
   execute "call tweetvim#say#open('" . tag . "')"
 endfunction
 
+let s:action_table.cache = {
+      \   'description' : 'add to cache',
+      \   'is_selectable' : 1,
+      \ }
+
+function! s:action_table.cache.func(candidates)
+  let tags = map(deepcopy(a:candidates), "substitute(v:val.word, '[#＃]', '', '')")
+  call tweetvim#cache#write('hash_tag', tags)
+endfunction
+
 let s:source_tag.action_table = s:action_table
 let s:source_tag_new.action_table = s:action_table
 let s:source_tag_buffer.action_table = s:action_table
