@@ -57,8 +57,9 @@ endfunction
 
 function! s:cache_write(word)
   call s:cache_read()
-  if index(s:cache['words'], a:word) == -1
-    call writefile(sort(add(s:cache['words'], a:word)), s:fname)
+  let new = filter(split(a:word), "index(s:cache['words'], v:val) == -1")
+  if !empty(new)
+    call writefile(sort(s:cache['words'] + new), s:fname)
   endif
 endfunction
 
