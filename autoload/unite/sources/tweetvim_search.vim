@@ -48,7 +48,7 @@ let s:cache = { 'words' : [], 'ftime' : -1 }
 
 function! s:cache_read()
   if s:cache['ftime'] != getftime(s:fname)
-    let s:cache['words'] = filereadable(s:fname) ? filter(readfile(s:fname), "v:val !=# '^\s*$'") : []
+    let s:cache['words'] = filereadable(s:fname) ? filter(readfile(s:fname), "v:val !=# ''") : []
     let s:cache['ftime'] = getftime(s:fname)
   endif
 endfunction
