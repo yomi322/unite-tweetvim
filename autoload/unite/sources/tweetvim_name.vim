@@ -8,7 +8,7 @@ endfunction
 let s:source_name = {
       \   'name' : 'tweetvim/name',
       \   'action_table' : {},
-      \   'default_action' : 'tweet_to',
+      \   'default_action' : 'tweet',
       \ }
 
 function! s:source_name.gather_candidates(args, context)
@@ -26,12 +26,12 @@ function! s:action_table.search.func(candidates)
   execute "call unite#sources#tweetvim_search#search('" . word . "')"
 endfunction
 
-let s:action_table.tweet_to = {
-      \   'description' : 'tweet_to',
+let s:action_table.tweet = {
+      \   'description' : 'tweet',
       \   'is_selectable' : 1,
       \ }
 
-function! s:action_table.tweet_to.func(candidates)
+function! s:action_table.tweet.func(candidates)
   let name = join(map(deepcopy(a:candidates), "v:val.word"))
   execute "call tweetvim#say#open('" . name . ' ' . "')"
 endfunction
