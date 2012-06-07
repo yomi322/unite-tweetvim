@@ -5,7 +5,6 @@ function! unite#sources#tweetvim_search#define()
   return [s:source_search, s:source_search_new]
 endfunction
 
-
 let s:source_search = {
       \   'name' : 'tweetvim/search',
       \   'action_table' : {},
@@ -16,7 +15,6 @@ function! s:source_search.gather_candidates(args, context)
   call s:cache_read()
   return map(copy(s:cache['words']), "{ 'word' : v:val, 'kind' : 'common' }")
 endfunction
-
 
 let s:source_search_new = {
       \   'name' : 'tweetvim/search_new',
@@ -33,15 +31,14 @@ let s:action_table = { 'execute' : { 'description' : 'search word in timeline' }
 function! s:action_table.execute.func(candidate)
   execute "call unite#sources#tweetvim_search#search('" . a:candidate.word . "')"
 endfunction
+
 let s:source_search.action_table = s:action_table
 let s:source_search_new.action_table = s:action_table
-
 
 function! unite#sources#tweetvim_search#search(word)
   call s:cache_write(a:word)
   call tweetvim#timeline('search', a:word)
 endfunction
-
 
 let s:fname = g:tweetvim_config_dir . '/search_history'
 let s:cache = { 'words' : [], 'ftime' : -1 }
