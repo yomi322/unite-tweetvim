@@ -13,7 +13,7 @@ let s:source_search = {
 
 function! s:source_search.gather_candidates(args, context)
   call s:cache_read()
-  return map(s:cache['words'], "{ 'word' : v:val, 'kind' : 'common' }")
+  return map(copy(s:cache['words']), "{ 'word' : v:val, 'kind' : 'common' }")
 endfunction
 
 let s:source_search.action_table.execute = { 'description' : 'search word in timeline' }
