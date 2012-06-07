@@ -13,7 +13,7 @@ let s:source_search = {
 
 function! s:source_search.gather_candidates(args, context)
   call s:cache_read()
-  return map(copy(s:cache['words']), "{ 'word' : v:val, 'kind' : 'common' }")
+  return map(copy(s:cache['words']), "{ 'word' : v:val }")
 endfunction
 
 let s:source_search_new = {
@@ -23,7 +23,7 @@ let s:source_search_new = {
       \ }
 
 function! s:source_search_new.change_candidates(args, context)
-  return [ { 'word' : a:context.input, 'kind' : 'common' } ]
+  return [ { 'word' : a:context.input } ]
 endfunction
 
 let s:action_table = {}
