@@ -1,27 +1,36 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! unite#sources#tweetvim_tag#define()
+  return [s:source_tag, s:source_tag_new, s:source_tag_buffer]
+endfunction
+
 let s:source_tag = {
-\   'name' : 'tweetvim/tag',
-\ }
+      \   'name' : 'tweetvim/tag',
+      \   'action_table' : {},
+      \   'default_action' : 'tweet',
+      \ }
 
 function! s:source_tag.gather_candidates(args, context)
-  let candidates = []
-  for word in tweetvim#cache#get('hash_tag')
-    let word = '#' . word
-    call add(candidates, {
-          \   'word' : word,
-          \   'kind' : 'command',
-          \   'action__command' : "call unite#sources#tweetvim_search#search('" . word . "')",
-          \ })
-  endfor
-  return candidates
+  return map(tweetvim#cache#get('hash_tag'), "{ 'word' : '#' . v:val }")
+endfunction
+
+let s:source_tag_new = {
+      \   'name' : 'tweetvim/tag_new',
+      \   'action_table' : {},
+      \   'default_action' : 'tweet',
+      \ }
+
+function! s:source_tag_new.change_candidates(args, context)
+  return [ { 'word' : '#' . a:context.input } ]
 endfunction
 
 
 let s:source_tag_buffer = {
-\   'name' : 'tweetvim/tag_buffer',
-\ }
+      \   'name' : 'tweetvim/tag_buffer',
+      \   'action_table' : {},
+      \   'default_action' : 'tweet',
+      \ }
 
 function! s:source_tag_buffer.gather_candidates(args, context)
   let pattern = '[ 　。、]\zs[#＃][^ 　].\{-1,}\ze[ 　\n]'
@@ -46,17 +55,33 @@ function! s:source_tag_buffer.gather_candidates(args, context)
     let word = '#' . word
     call add(candidates, {
           \   'word' : word,
-          \   'kind' : 'command',
-          \   'action__command' : "call unite#sources#tweetvim_search#search('" . word . "')",
           \ })
   endfor
   return candidates
 endfunction
 
+let s:action_table = {}
+let s:action_table.search = {
+      \   'description' : 'search word in timeline',
+      \   'is_selectable' : 1,
+      \ }
 
-function! unite#sources#tweetvim_tag#define()
-  return [s:source_tag, s:source_tag_buffer]
+function! s:action_table.search.func(candidates)
+  let word = join(map(deepcopy(a:candidates), "v:val.word"))
+  execute "call unite#sources#tweetvim_search#search('" . word . "')"
 endfunction
+
+let s:action_table.tweet = {
+      \   'description' : 'tweet',
+      \   'is_selectable' : 1,
+      \ }
+
+function! s:action_table.tweet.func(candidates)
+  let tag = join(map(deepcopy(a:candidates), "v:val.word"))
+  execute "call tweetvim#say#open('" . tag . "')"
+endfunction
+
+let s:source_name.action_table = s:action_table
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
