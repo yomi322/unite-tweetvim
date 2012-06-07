@@ -33,31 +33,7 @@ let s:source_tag_buffer = {
       \ }
 
 function! s:source_tag_buffer.gather_candidates(args, context)
-  let pattern = '[ 　。、]\zs[#＃][^ 　].\{-1,}\ze[ 　\n]'
-  let tags = []
-  for line in getbufline('%', 1, '$')
-    let line = line . ' '
-    while 1
-      let tag = matchstr(line, pattern)
-      if tag ==# ''
-        break
-      endif
-      let line = substitute(line, tag, '', '')
-      let tag = substitute(tag, '[#＃]', '', '')
-      if index(tags, tag) == -1
-        call add(tags, tag)
-      endif
-    endwhile
-  endfor
-
-  let candidates = []
-  for word in tags
-    let word = '#' . word
-    call add(candidates, {
-          \   'word' : word,
-          \ })
-  endfor
-  return candidates
+  return map(s:getbuftag(), "{ 'word' : '#' . v:val }")
 endfunction
 
 let s:action_table = {}
@@ -84,6 +60,26 @@ endfunction
 let s:source_tag.action_table = s:action_table
 let s:source_tag_new.action_table = s:action_table
 let s:source_tag_buffer.action_table = s:action_table
+
+function! s:getbuftag()
+  let pattern = '[ 　。、]\zs[#＃][^ 　].\{-1,}\ze[ 　\n]'
+  let tags = []
+  for line in getbufline('%', 1, '$')
+    let line = line . ' '
+    while 1
+      let tag = matchstr(line, pattern)
+      if tag ==# ''
+        break
+      endif
+      let line = substitute(line, tag, '', '')
+      let tag = substitute(tag, '[#＃]', '', '')
+      if index(tags, tag) == -1
+        call add(tags, tag)
+      endif
+    endwhile
+  endfor
+  return tags
+endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
