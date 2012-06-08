@@ -44,7 +44,7 @@ let s:action_table.search = {
 
 function! s:action_table.search.func(candidates)
   let word = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call unite#sources#tweetvim_search#search('" . word . "')"
+  call unite#sources#tweetvim_search#search(word)
 endfunction
 
 let s:action_table.tweet = {
@@ -54,7 +54,7 @@ let s:action_table.tweet = {
 
 function! s:action_table.tweet.func(candidates)
   let tag = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call tweetvim#say#open('" . tag . "')"
+  call tweetvim#say#open(tag)
 endfunction
 
 let s:action_table.cache = {

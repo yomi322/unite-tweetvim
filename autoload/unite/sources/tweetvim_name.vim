@@ -23,7 +23,7 @@ let s:action_table.search = {
 
 function! s:action_table.search.func(candidates)
   let word = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call unite#sources#tweetvim_search#search('" . word . "')"
+  call unite#sources#tweetvim_search#search(word)
 endfunction
 
 let s:action_table.tweet = {
@@ -33,7 +33,7 @@ let s:action_table.tweet = {
 
 function! s:action_table.tweet.func(candidates)
   let name = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call tweetvim#say#open('" . name . ' ' . "')"
+  call tweetvim#say#open(name . ' ')
 endfunction
 
 let s:action_table.user_timeline = {
@@ -41,7 +41,7 @@ let s:action_table.user_timeline = {
       \ }
 
 function! s:action_table.user_timeline.func(candidate)
-  execute "call tweetvim#timeline('user_timeline', '" . a:candidate.word . "')"
+  call tweetvim#timeline('user_timeline', a:candidate.word)
 endfunction
 
 let s:source_name.action_table = s:action_table

@@ -34,7 +34,7 @@ let s:action_table.search = {
 
 function! s:action_table.search.func(candidates)
   let word = join(map(deepcopy(a:candidates), "v:val.word"))
-  execute "call unite#sources#tweetvim_search#search('" . word . "')"
+  call unite#sources#tweetvim_search#search(word)
 endfunction
 
 let s:source_search.action_table = s:action_table
